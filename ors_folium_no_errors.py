@@ -14,7 +14,6 @@ for _ in range(100):
 else:
     pass
 
-
 long_end = coordinates[1][0]
 lat_end = coordinates[1][1]
 day_end = day_start+1
@@ -60,8 +59,6 @@ try:
 except:
     city_end = location_end.raw['address']['county']
 
-#city_start = location_start.raw['address']['city']
-#city_end = location_end.raw['address']['city']
 
 country_start = location_start.raw['address']['country']
 country_end = location_end.raw['address']['country']
@@ -74,9 +71,8 @@ print('Mean velocity:',round(mean_velocity,1),'km/h')
 print('Total climb:',round(el_plus),'m')
 print('Total descent:',round(el_minus),'m')
 
-## OUTPUT GRAFICO
+# Graphic output
 
-#W,H =(1080,1080)
 W,H =(864,1080)
 background = Image.new(mode='RGB',size=(W,H),color=(255,255,255))
 
@@ -142,8 +138,6 @@ end_country = str(country_end)
 w_end_country, h_end_country = draw.textsize(end_country, font=font_italic)
 draw.text(((round(W/2+(W/2-w_end_country)/2)),h_country),end_country,(0,0,0),font=font_italic)
 
-# DELIRIO FRECCE
-
 import math
 
 freccia1 = "> "
@@ -188,49 +182,6 @@ else:
     draw.text((round(W/4+w_max_start/2)+(iii-ooo)*w_freccia1/2,115+10+5+2),day,(0,0,0),font=font_day)
 
 
-#freccia = Image.open('./icons/straight.png')
-#freccia = freccia.resize((60,60))
-#w_freccia, h_freccia = freccia.size
-#background.paste(freccia,(round((W-w_freccia)/2),100+20))
-
-#w_city_max = max(w_start_city,w_end_city)
-#
-#if w_city_max<150:
-#    freccia1 = "> > > > > > > > > >"
-#    freccia2 = " > > > > > > > > > "
-#elif 150<=w_city_max<180:
-#    freccia1 = "> > > > > > > > >"
-#    freccia2 = " > > > > > > > > "
-#elif 180<=w_city_max<220:
-#    freccia1 = "> > > > > > > >"
-#    freccia2 = " > > > > > > > "
-#elif 220<=w_city_max<240:
-#    freccia1 = "> > > > > > >"
-#    freccia2 = " > > > > > > "
-#elif 240<=w_city_max<275:
-#    freccia1 = "> > > > > >"
-#    freccia2 = " > > > > > "
-#elif 275<=w_city_max<300:
-#    freccia1 = "> > > > >"
-#    freccia2 = " > > > > "
-#elif 300<=w_city_max<320:
-#    freccia1 = "> > > >"
-#    freccia2 = " > > > "
-#elif 320<=w_city_max<340:
-#    freccia1 = "> > >"
-#    freccia2 = " > > "
-#elif 340<=w_city_max<380:
-#    freccia1 = "> >"
-#    freccia2 = " > "
-#elif w_city_max>=380:
-#    freccia1 = ">"
-#    freccia2 = " " 
-# 
-#w_freccia1,h_freccia1 = draw.textsize(freccia1, font=font)
-#w_freccia2,h_freccia2 = draw.textsize(freccia2, font=font)
-#draw.text((round((W-w_freccia1)/2),115),freccia1,(0,0,0),font=font)
-#draw.text((round((W-w_freccia2)/2),115+15),freccia2,(0,0,0),font=font)
-
 stats_out = 'Total distance: '+str(round(distance))+'km || Total time: '+str(hours)+'h '+str(minutes)+'min '+str(seconds)+'s || Average speed: '+str(round(mean_velocity,1))+'km/h'
 w_stats_out, h_stats_out = draw.textsize(stats_out, font=font_stats)
 draw.text((round((W-w_stats_out)/2),172+30+20+2),stats_out,(0,0,0),font=font_stats)
@@ -246,8 +197,7 @@ background = background.filter(ImageFilter.SHARPEN)
 background.save('./exported_images/temap'+str(day_start)+'.png')
 
 
-## OUTPUT STATISTICHE
-#csv export per recap giornata con statistiche e long e lat
+# Stats Output for .csv Day Report
 
 header_stats = ['day','city start','country start','city end','country end','total distance [km]','total time [h]','mean velocity [km/h]','total climb [m]','total descent [m]']
 general_data = [day_start, city_start, country_start, city_end, country_end, distance, duration, mean_velocity, el_plus, el_minus]
