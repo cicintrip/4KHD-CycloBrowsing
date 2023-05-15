@@ -66,9 +66,6 @@ for route_point in route["features"][0]["geometry"]["coordinates"]:
     previous_cumulative_distance = cumulative_distances[-1]
 
 
-
-
-
 distance = route['features'][0]['properties']['segments'][0]['distance']*0.001
 duration = route['features'][0]['properties']['segments'][0]['duration']*0.000277778
 mean_velocity = distance/duration
@@ -93,7 +90,7 @@ for x in range(1, num_coords):
     else:
         el_plus = el_plus - el_delta
 
-# vettori da usare per la composizione del .csv recap day
+# .csv Recap Day vectors
 
 lat_arch= []
 for xx in range(0, num_coords):
@@ -115,9 +112,6 @@ for yy in range(0, num_coords):
     markers_points.append([lat_arch[yy],long_arch[yy]])
 
 
-#map_directions = folium.Map(location=[lat_mean,long_mean],zoom_start=9,tiles="Stamen Terrain")
-#map_directions = folium.Map(location=[lat_mean,long_mean],zoom_start=1,tiles="Stamen Watercolor")
-
 if distance <10:
     map_directions = folium.Map(location=[lat_mean,long_mean],zoom_start=10,tiles="Stamen Toner", zoom_control=False)
 elif distance <160:
@@ -125,18 +119,14 @@ elif distance <160:
 else:
     map_directions = folium.Map(location=[lat_mean,long_mean],zoom_start=8,tiles="Stamen Toner", zoom_control=False)
 
-# in folium prima lat e poi long
 
 location_start = [lat_1,long_1]
 location_end = [lat_2, long_2]
 
-#icon_start = folium.features.CustomIcon('./icons/1.png', icon_size=(50,50))
-#icon_end = folium.features.CustomIcon('./icons/2.png', icon_size=(50,50))
 
 folium.GeoJson(route, name='route').add_to(map_directions)
 
 
-#modifica colore e dimensione del tracciato
 folium.PolyLine(markers_points, color='red', weight=50).add_to(map_directions)
 
 
@@ -145,16 +135,10 @@ folium.Marker(location=location_start, icon=DivIcon(
     html='<div style="font-size: 25pt; text-align:center; color : white">A</div>',
     )).add_to(map_directions)
 
-
 folium.Marker(location=location_end, icon=DivIcon(
     icon_size=[50,50],
     html='<div style="font-size: 25pt; text-align:center; color : white">B</div>',
     )).add_to(map_directions)
-
-#folium.Marker(location=location_start, icon=icon_start).add_to(map_directions)
-#folium.Marker(location=location_end, icon=icon_end).add_to(map_directions)
-#folium.Marker(location=location_start).add_to(map_directions)
-#folium.Marker(location=location_end, icon=icon_end).add_to(map_directions)
 
 map_directions
 map_directions.save('./map_data/map.html')
@@ -162,30 +146,24 @@ map_directions.save('./map_data/map.html')
 import os
 import time
 from selenium import webdriver
-##from webdriver_manager.chrome import ChromeDriverManager
-
+#  from webdriver_manager.chrome import ChromeDriverManager #alternative line if you're using Google Chrome
 
 delay=5
 fn='./map_data/map.html'
 tmpurl='file://{path}/{mapfile}'.format(path=os.getcwd(),mapfile=fn)
 map_directions.save(fn)
 
-##browser = webdriver.Chrome(ChromeDriverManager().install())
+#browser = webdriver.Chrome(ChromeDriverManager().install()) #alternative line if you're using Google Chrome
 browser = webdriver.Chrome('/usr/bin/chromedriver')
-#browser.set_window_size(1080,1080)
 browser.get(tmpurl)
 time.sleep(delay)
-#browser.save_screenshot('map.png')
 browser.save_screenshot('./exported_maps/map'+str(day_start)+'.png')
 browser.quit()
 
 
-#aggiunta
-#plt.figure(figsize=(5,1.7))
 plt.figure(figsize=(8.28,2.4))
 plt.tight_layout()
 plt.plot(cumulative_distances, elevations, '_', linewidth=4,color='black')
-#plt.subplots_adjust(left=0.182,bottom=0.258,right=0.982,top=0.913)
 plt.subplots_adjust(left=0.182,bottom=0.458,right=0.982,top=0.913)
 plt.locator_params(axis='x',nbins=2)
 plt.locator_params(axis='y',nbins=2)
@@ -200,4 +178,3 @@ plt.ylabel("Elevation \n[m.a.s.l.]", labelpad=labeldistance_y)
 plt.yticks([0,round(max(elevations))])
 plt.xticks([0,max(cumulative_distances)],[0,round(distance)])
 plt.savefig('./exported_plots/plot'+str(day_start)+'.png',dpi=200)
-#plt.show()
