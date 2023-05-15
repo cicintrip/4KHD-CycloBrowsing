@@ -6,8 +6,8 @@ import math
 import random
 import csv
 
-ors_key = '5b3ce3597851110001cf6248c65c806ddb464dfc81512e297135a3a0'
-client = ors.Client(key='5b3ce3597851110001cf6248c65c806ddb464dfc81512e297135a3a0')
+ors_key = '' #please insert your ORS (Open Route Service) key
+client = ors.Client(key='')  #please insert your ORS (Open Route Service) key
 
 with open('./map_data/init_coords_day.csv','r') as file:
     reader = csv.reader(file, delimiter=',')
