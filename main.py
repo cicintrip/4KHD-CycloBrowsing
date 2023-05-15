@@ -9,7 +9,7 @@ def initialize_bot():
     with open('./map_data/init_coords_day.csv','w') as file:
         writer = csv.writer(file, delimiter=',')
         writer.writerow(['longitude','latitude','day'])
-        writer.writerow([14.29991,53.353943, 201])
+        writer.writerow([8.9142,45.5983, 1])
 
     try: 
         os.remove("./map_data/map.html")
