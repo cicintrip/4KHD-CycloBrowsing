@@ -193,7 +193,6 @@ draw.text((round((W-w_stats_out2)/2),212+20+20+2),stats_out2,(0,0,0),font=font_s
 background = background.filter(ImageFilter.GaussianBlur(1))
 background = background.filter(ImageFilter.CONTOUR)
 background = background.filter(ImageFilter.SHARPEN)
-#background = PIL.ImageOps.invert(background)
 background.save('./exported_images/temap'+str(day_start)+'.png')
 
 
